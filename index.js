@@ -1,9 +1,11 @@
-// items start at row 11, cells A to I
-
 const XLSX = require('xlsx');
-const QRCode = require('qrcode')
+const QRCode = require('qrcode');
+const fs = require('fs');
+const pdfkit = require('pdfkit');
 const workbook = XLSX.readFile('TT codes Test.xlsx');
 const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+
+const pdfDoc = new pdfkit();
 
 const prods = [];
 let prod = {};
@@ -44,8 +46,13 @@ for (let cell in worksheet) {
 
 
     let items = prods.slice(4)
-console.log(items);
 
-items.forEach(item => {
+    pdfDoc.pipe(fs.createWriteStream('output.pdf'));
     
-});
+    items.forEach(item => {
+        pdfDoc.text(item.productNameRus);
+        //pdfDoc.image();
+    });
+    pdfDoc.end();
+
+
