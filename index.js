@@ -1,3 +1,5 @@
+// items start at row 11, cells A to I
+const QrImage = require('qr-image');
 const XLSX = require('xlsx');
 const QRCode = require('qrcode');
 const fs = require('fs');
@@ -51,8 +53,20 @@ for (let cell in worksheet) {
     
     items.forEach(item => {
         pdfDoc.text(item.productNameRus);
-        //pdfDoc.image();
+        QRCode.toString([item], function (err, string) {
+
+            for(let i=0; i<items.length; i++){
+                pdfDoc.image(string, 0, 15, {width: 300});
+            }
+        });
     });
+    pdfDoc.addPage();
     pdfDoc.end();
+
+    items.forEach(item => {
+        QRCode.toString([item], function (err, string){
+           // console.log(string, item.productNameRus);
+        })
+    })
 
 
