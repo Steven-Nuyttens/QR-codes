@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jspdf-autotable": "^3.5.12",
     "node-xlsx": "^0.15.0",
     "pdfkit": "^0.11.0",
     "qr-image": "^3.2.0",
-    "qrcode": "^1.4.4"
+    "qrcode": "^1.4.4",
+    "voilab-pdf-table": "^0.5.0"
   }
 }
