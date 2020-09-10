@@ -56,7 +56,7 @@ let textArray = items.map(item => {
 let imageArray = items.map((item,i) => {
   // console.log(QRCode.toFile('code'+i+'.png', (item.productNameRus, item.statusIdCode)))
   return(
-    QRCode.toFile('code'+i+'.png', (item.productNameRus + item.buyer + item.producer + item.gtin + item.productNameEng + item.unitAggr + item.dateIdCode + item.idCode + item.statusIdCode))
+    QRCode.toFile('./images/code'+i+'.png', (item.productNameRus + item.buyer + item.producer + item.gtin + item.productNameEng + item.unitAggr + item.dateIdCode + item.idCode + item.statusIdCode))
     ).then (function(result) {
       //console.log(result)
   })
