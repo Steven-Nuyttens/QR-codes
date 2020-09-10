@@ -2,12 +2,10 @@
 const XLSX = require("xlsx");
 const QRCode = require("qrcode");
 const fs = require("fs");
-const pdfkit = require("pdfkit");
 const workbook = XLSX.readFile("TT codes Test.xlsx");
 const worksheet = workbook.Sheets[workbook.SheetNames[0]];
 
-const pdfTable = require("./pdfkit-tables");
-const pdfDoc = new pdfkit();
+
 
 const prods = [];
 let prod = {};
@@ -47,16 +45,39 @@ for (let cell in worksheet) {
 }
 
 let items = prods.slice(4);
-// items to pdf
+// for each item -> create a qr code and save it to a file
 
-pdfDoc.pipe(fs.createWriteStream("output.pdf"));
+let textArray = items.map(item => {
+  return (
+    item.productNameRus
+  )
+})
 
-items.forEach((item) => {
-  QRCode.toString([item], function (err, string) {
-    pdfDoc.image("code.png");
-    pdfDoc.text(item.productNameRus);
+let imageArray = items.map((item,i) => {
+  // console.log(QRCode.toFile('code'+i+'.png', (item.productNameRus, item.statusIdCode)))
+  return(
+    QRCode.toFile('code'+i+'.png', (item.productNameRus + item.buyer + item.producer + item.gtin + item.productNameEng + item.unitAggr + item.dateIdCode + item.idCode + item.statusIdCode))
+    ).then (function(result) {
+      //console.log(result)
+  })
+})
 
-    pdfDoc.addPage();
-});
-});
-pdfDoc.end();
+
+
+let cells = textArray.map((text, i) => {
+  return (
+    
+    text//, imageArray[i]
+  )
+})
+
+console.log(cells)
+
+
+
+  
+  
+  
+  // items to pdf
+
+
